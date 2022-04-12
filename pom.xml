@@ -16,59 +16,60 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <argLine>-Duser.language=en -Duser.region=US -Duser.timezone=UTC</argLine>
 
-        <!-- You'll probably want to remove this for your project. We're just using it here
-             so that dropwizard-example doesn't get deployed as a library. -->
-        <maven.deploy.skip>true</maven.deploy.skip>
-        <!-- You'll probably want to remove this for your project. We're just using it here
-             so that dropwizard-example site doesn't get staged and deployed. -->
-        <maven.site.skip>true</maven.site.skip>
-        <maven.site.deploy.skip>true</maven.site.deploy.skip>
-        <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
-
         <junit5.version>5.8.2</junit5.version>
     </properties>
 
     <dependencies>
+
+        <!-- Dropwizard -->
+
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-auth</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-assets</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-http2</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-hibernate</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-migrations</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-views-freemarker</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-views-mustache</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-metrics-graphite</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
+
+        <!-- Test -->
+
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-testing</artifactId>
@@ -80,44 +81,40 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>${junit5.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
             <version>${junit5.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>mysql</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.28</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
+
+
         <dependency>
             <groupId>org.glassfish.jersey.test-framework.providers</groupId>
             <artifactId>jersey-test-framework-provider-inmemory</artifactId>
@@ -133,6 +130,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.glassfish.jersey.test-framework.providers</groupId>
             <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
@@ -148,6 +146,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -161,6 +160,14 @@
             </dependency>
 
             <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>5.10.0</version>
+            </dependency>
+
+            <!-- Test -->
+
+            <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
                 <version>1.16.3</version>
@@ -168,17 +175,12 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>net.java.dev.jna</groupId>
-                <artifactId>jna</artifactId>
-                <version>5.10.0</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
-
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -196,6 +198,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -208,6 +211,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -219,6 +223,7 @@
                     </archive>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -252,6 +257,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -265,6 +271,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
 
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -357,6 +364,7 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>jdk11</id>
             <activation>
