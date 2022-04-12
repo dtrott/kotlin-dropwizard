@@ -1,1 +1,17 @@
 template: Hello, %s!
+
+database:
+  driverClass: org.postgresql.Driver
+  user: postgres
+  password: postgres
+  url: jdbc:postgresql://localhost/example
+
+  properties:
+    hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    charSet: UTF-8
+
+  validationQuery: "SELECT 1"
+  maxWaitForConnection: 1s
+  checkConnectionWhileIdle: false
+  minSize: 8
+  maxSize: 32

@@ -103,6 +103,21 @@
             <artifactId>dropwizard-metrics-graphite</artifactId>
         </dependency>
 
+        <!-- Frameworks -->
+
+        <dependency>
+            <groupId>ru.vyarus</groupId>
+            <artifactId>dropwizard-guicey</artifactId>
+        </dependency>
+
+        <!-- Connectivity -->
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.3.3</version>
+        </dependency>
+
         <!-- Test -->
 
         <dependency>
@@ -226,6 +241,16 @@
                 <version>23.0.0</version>
             </dependency>
 
+            <!-- Frameworks -->
+
+            <dependency>
+                <groupId>ru.vyarus</groupId>
+                <artifactId>dropwizard-guicey</artifactId>
+                <version>5.5.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- Jackson -->
 
             <dependency>
@@ -331,6 +356,14 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
+                <configuration>
+                    <compilerPlugins>
+                        <plugin>all-open</plugin>
+                    </compilerPlugins>
+                    <pluginOptions>
+                        <option>all-open:annotation=javax.persistence.Entity</option>
+                    </pluginOptions>
+                </configuration>
                 <executions>
                     <execution>
                         <id>compile</id>
@@ -356,6 +389,13 @@
                         </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-allopen</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>
