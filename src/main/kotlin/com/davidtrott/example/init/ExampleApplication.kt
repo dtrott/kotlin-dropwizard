@@ -34,6 +34,9 @@ class ExampleApplication : Application<ExampleConfiguration>() {
                 override fun configure(configuration: Configuration) {
                     super.configure(configuration)
 
+                    // Override implicit naming strategy, so that we get full paths to embedded fields
+                    configuration.setImplicitNamingStrategy(ImplicitNamingStrategyComponentPathImpl.INSTANCE)
+
                     // Force snake case on the database fields
                     configuration.setPhysicalNamingStrategy(CamelCaseToUnderscoresNamingStrategy())
                 }

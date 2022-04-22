@@ -3,6 +3,7 @@ package com.davidtrott.example.resource
 import com.codahale.metrics.annotation.Timed
 import com.davidtrott.example.database.dao.MessageDao
 import com.davidtrott.example.database.model.Message
+import com.davidtrott.example.database.model.MessageBody
 import io.dropwizard.hibernate.UnitOfWork
 import java.util.*
 import javax.inject.Inject
@@ -27,6 +28,7 @@ class MessageResource @Inject constructor(
     fun store(): UUID =
         messageDao.store(Message().apply {
             text = "Some Text"
+            body = MessageBody("Alpha", "Beta")
         }).id
 
     @GET
