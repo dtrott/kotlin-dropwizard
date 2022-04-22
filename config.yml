@@ -7,7 +7,12 @@ database:
   url: jdbc:postgresql://localhost/example
 
   properties:
-    hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    # Use a custom dialect to change default string type from "varchar(255)" to "varchar"
+    hibernate.dialect: com.davidtrott.example.database.util.CustomPostgreSQLDialect
+    # Change search path to place new tables in the "example" schema
+    currentSchema: example,public
+    # Instruct hibernate to update the database schema automatically on app startup
+    hibernate.hbm2ddl.auto: update
     charSet: UTF-8
 
   validationQuery: "SELECT 1"
