@@ -51,6 +51,7 @@ class ExampleApplication : Application<ExampleConfiguration>() {
                         override fun configure() =
                             bind(SessionFactory::class.java).toInstance(hibernate.sessionFactory)
                     })
+                    .searchCommands()
                     .build()
             )
         }
