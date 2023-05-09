@@ -7,7 +7,6 @@ import com.davidtrott.example.api.domain.v1.generated.models.MessageBody
 import com.davidtrott.example.api.model.ApplicationResult.Companion.toResponse
 import com.davidtrott.example.service.MessageService
 import com.davidtrott.example.service.MessageService.FailedToLoad
-import io.dropwizard.hibernate.UnitOfWork
 import java.util.*
 import javax.inject.Inject
 import javax.ws.rs.core.Response
@@ -19,7 +18,6 @@ class MessageResource @Inject constructor(
 ) : MessageApi {
 
     @Timed
-    @UnitOfWork // All DB operations need unit of work
     override fun getMessage(id: UUID): Response = messageService
         .load(id)
         .map { it.toWeb() }
@@ -27,7 +25,6 @@ class MessageResource @Inject constructor(
 
 
     @Timed
-    @UnitOfWork // All DB operations need unit of work
     override fun storeMessage(): Response = messageService
         .store("Some Text", MessageBodyApp("Alpha", "Beta"))
         .toResponse()
