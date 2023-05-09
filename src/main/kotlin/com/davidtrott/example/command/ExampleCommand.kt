@@ -5,9 +5,9 @@ import com.davidtrott.example.database.util.inTransaction
 import com.davidtrott.example.database.util.withSession
 import com.davidtrott.example.init.ExampleConfiguration
 import com.davidtrott.example.service.MessageService
-import io.dropwizard.Application
-import io.dropwizard.cli.EnvironmentCommand
-import io.dropwizard.setup.Environment
+import io.dropwizard.core.Application
+import io.dropwizard.core.cli.EnvironmentCommand
+import io.dropwizard.core.setup.Environment
 import net.sourceforge.argparse4j.inf.Namespace
 import net.sourceforge.argparse4j.inf.Subparser
 import org.hibernate.SessionFactory
