@@ -15,7 +15,7 @@ import javax.inject.Inject
 abstract class AbstractCrudDao<E : Any, K : Serializable> @Inject constructor(sessionFactory: SessionFactory) :
     AbstractDAO<E>(sessionFactory) {
 
-    fun findById(id: K) = get(id)
+    fun findById(id: K): E? = get(id)
 
     fun store(entity: E): E = persist(entity)
 }
