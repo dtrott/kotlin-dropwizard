@@ -1,0 +1,101 @@
+openapi: 3.0.0
+info:
+  title: Example API
+  description: Example Rest Service
+  version: 0.9.0
+servers:
+  - url: http://localhost:8080/api/domain/v1
+    description: Local development.
+
+tags:
+  - name: example
+    description: Example greeting API
+  - name: message
+    description: Provides simple messages.
+
+paths:
+  /hello-world:
+    get:
+      operationId: getHelloWorld
+      tags:
+        - example
+      summary: Says hello to the caller.
+      description: Says hello to the caller.
+      parameters:
+        - name: name
+          in: query
+          required: false
+          allowEmptyValue: true
+          example: Dave
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Hello message.
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /message/store:
+    get:
+      operationId: storeMessage
+      tags:
+        - message
+      summary: Stores a message.
+      description: Should be a POST, but using a GET to allow for testing from the browser.
+      responses:
+        '200':
+          description: If message is stored successfully.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+  /message/{id}:
+    get:
+      operationId: getMessage
+      tags:
+        - message
+      summary: Retrieves a message by id.
+      description: Fetches a message from the database.
+      parameters:
+        - name: id
+          in: path
+          description: Message ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: The message the was retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+components:
+  schemas:
+    Message:
+      description: A message.
+      properties:
+        text:
+          type: string
+          description: The message text.
+        body:
+          $ref: '#/components/schemas/MessageBody'
+      required:
+        - text
+        - body
+    MessageBody:
+      description: The body of the message
+      properties:
+        valueA:
+          type: string
+          description: Value A.
+        valueB:
+          type: string
+          description: Value B.
+      required:
+        - valueA
+        - valueB

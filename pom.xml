@@ -355,6 +355,38 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>6.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/spec/example-openapi.yaml</inputSpec>
+                            <generatorName>kotlin-server</generatorName>
+                            <generateModels>true</generateModels>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <generateApis>true</generateApis>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <configOptions>
+                                <packageName>com.davidtrott.example.api.domain.v1.generated</packageName>
+                                <sourceFolder>.</sourceFolder>
+                                <serializationLibrary>jackson</serializationLibrary>
+                                <enumPropertyNaming>UPPERCASE</enumPropertyNaming>
+                                <library>jaxrs-spec</library>
+                                <apiSuffix>Api</apiSuffix>
+                                <interfaceOnly>true</interfaceOnly>
+                                <returnResponse>true</returnResponse>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
@@ -377,6 +409,7 @@
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
                                 <sourceDir>${project.basedir}/src/main/java</sourceDir>
+                                <sourceDir>${project.basedir}/target/generated-sources/openapi/</sourceDir>
                             </sourceDirs>
                         </configuration>
                     </execution>
