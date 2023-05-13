@@ -32,7 +32,7 @@ class MessageService @Inject constructor(
         Success(messageDao.store(Message().apply {
             this.text = text
             this.body = body
-        }).id)
+        }))
 
     enum class FailedToLoad {
         NOT_FOUND

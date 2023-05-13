@@ -1,8 +1,6 @@
 package com.davidtrott.example.command
 
 import com.davidtrott.example.database.model.MessageBody
-import com.davidtrott.example.database.util.inTransaction
-import com.davidtrott.example.database.util.withSession
 import com.davidtrott.example.init.ExampleConfiguration
 import com.davidtrott.example.service.MessageService
 import io.dropwizard.core.Application
@@ -10,7 +8,6 @@ import io.dropwizard.core.cli.EnvironmentCommand
 import io.dropwizard.core.setup.Environment
 import net.sourceforge.argparse4j.inf.Namespace
 import net.sourceforge.argparse4j.inf.Subparser
-import org.hibernate.SessionFactory
 import javax.inject.Inject
 
 /**
@@ -28,9 +25,6 @@ class ExampleCommand(application: Application<ExampleConfiguration>) : Environme
 ) {
 
     @Inject
-    lateinit var sessionFactory: SessionFactory
-
-    @Inject
     lateinit var messageService: MessageService
 
     // Force the caller to provide a message on the command line
@@ -45,11 +39,7 @@ class ExampleCommand(application: Application<ExampleConfiguration>) : Environme
     }
 
     override fun run(environment: Environment, namespace: Namespace, config: ExampleConfiguration) {
-        val id = sessionFactory.withSession {
-            sessionFactory.inTransaction {
-                messageService.store(namespace.getString("message"), MessageBody("One", "Two"))
-            }
-        }
+        val id = messageService.store(namespace.getString("message"), MessageBody("One", "Two"))
 
         println(id)
     }
