@@ -1,32 +1,47 @@
 package com.davidtrott.example.resource
 
 import com.codahale.metrics.annotation.Timed
-import com.davidtrott.example.database.model.MessageBody
+import com.davidtrott.example.api.domain.v1.generated.apis.MessageApi
+import com.davidtrott.example.api.domain.v1.generated.models.Message
+import com.davidtrott.example.api.domain.v1.generated.models.MessageBody
+import com.davidtrott.example.api.model.ApplicationResult.Companion.toResponse
 import com.davidtrott.example.service.MessageService
+import com.davidtrott.example.service.MessageService.FailedToLoad
 import io.dropwizard.hibernate.UnitOfWork
 import java.util.*
 import javax.inject.Inject
-import javax.ws.rs.GET
-import javax.ws.rs.Path
-import javax.ws.rs.PathParam
-import javax.ws.rs.Produces
-import javax.ws.rs.core.MediaType
+import javax.ws.rs.core.Response
+import com.davidtrott.example.database.model.Message as MessageApp
+import com.davidtrott.example.database.model.MessageBody as MessageBodyApp
 
-@Path("/message")
-@Produces(MediaType.APPLICATION_JSON)
 class MessageResource @Inject constructor(
     private val messageService: MessageService,
-) {
+) : MessageApi {
 
-    @GET // Using get, so I can test from the browser this should be a POST
     @Timed
     @UnitOfWork // All DB operations need unit of work
-    @Path("store")
-    fun store() = messageService.store("Some Text", MessageBody("Alpha", "Beta"))
+    override fun getMessage(id: UUID): Response = messageService
+        .load(id)
+        .map { it.toWeb() }
+        .toResponse(::handleFailedToLoadError)
 
-    @GET
+
     @Timed
-    @Path("{id}")
     @UnitOfWork // All DB operations need unit of work
-    fun load(@PathParam("id") id: UUID) = messageService.load(id)
+    override fun storeMessage(): Response = messageService
+        .store("Some Text", MessageBodyApp("Alpha", "Beta"))
+        .toResponse()
+
+
+    // Error handling
+
+    private fun handleFailedToLoadError(error: FailedToLoad): Response = when (error) {
+        FailedToLoad.NOT_FOUND -> Response.status(404)
+    }.build()
+
+
+    // Extensions to convert type from application to web
+    private fun MessageApp.toWeb() = Message(text, body.toWeb())
+
+    private fun MessageBodyApp.toWeb() = MessageBody(valueA, valueB)
 }

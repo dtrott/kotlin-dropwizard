@@ -1,5 +1,8 @@
 package com.davidtrott.example.service
 
+import com.davidtrott.example.api.model.ApplicationResult
+import com.davidtrott.example.api.model.ApplicationResult.Failed
+import com.davidtrott.example.api.model.ApplicationResult.Success
 import com.davidtrott.example.database.dao.MessageDao
 import com.davidtrott.example.database.model.Message
 import com.davidtrott.example.database.model.MessageBody
@@ -16,12 +19,22 @@ import javax.transaction.Transactional
 class MessageService @Inject constructor(
     private val messageDao: MessageDao,
 ) {
-    fun load(id: UUID): Message? = messageDao.findById(id)
+    fun load(id: UUID): ApplicationResult<Message, FailedToLoad, Void> =
+        with(messageDao.findById(id)) {
+            when (this) {
+                null -> Failed(FailedToLoad.NOT_FOUND)
+                else -> Success(this)
+            }
+        }
 
     @Transactional
-    fun store(text: String, body: MessageBody): UUID =
-        messageDao.store(Message().apply {
+    fun store(text: String, body: MessageBody): ApplicationResult<UUID, Void, Void> =
+        Success(messageDao.store(Message().apply {
             this.text = text
             this.body = body
-        }).id
+        }).id)
+
+    enum class FailedToLoad {
+        NOT_FOUND
+    }
 }
