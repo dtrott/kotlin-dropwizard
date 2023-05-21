@@ -509,12 +509,6 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>net.java.dev.jna</groupId>
-                <artifactId>jna</artifactId>
-                <version>5.13.0</version>
-            </dependency>
-
             <!-- Locking down version, where multiple paths to same dependency exist -->
 
             <dependency>
