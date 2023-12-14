@@ -4,9 +4,9 @@ import com.davidtrott.example.healthcheck.TemplateHealthCheck
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.google.inject.AbstractModule
 import io.dropwizard.core.Application
-import io.dropwizard.hibernate.ScanningHibernateBundle
 import io.dropwizard.core.setup.Bootstrap
 import io.dropwizard.core.setup.Environment
+import io.dropwizard.hibernate.ScanningHibernateBundle
 import org.hibernate.SessionFactory
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
