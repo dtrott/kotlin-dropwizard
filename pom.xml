@@ -22,6 +22,7 @@
         <kotlin-coroutine.version>1.7.1</kotlin-coroutine.version>
         <jackson.version>2.14.2</jackson.version>
         <dropwizard-guicey.version>6.0.1</dropwizard-guicey.version>
+        <jdbi3.version>3.37.1</jdbi3.version>
 
         <junit5.version>5.9.3</junit5.version>
     </properties>
@@ -73,6 +74,7 @@
                     <pluginOptions>
                         <option>all-open:annotation=javax.persistence.Entity</option>
                         <option>all-open:annotation=javax.persistence.Embeddable</option>
+                        <option>all-open:annotation=ru.vyarus.guicey.jdbi3.tx.InTransaction</option>
                     </pluginOptions>
                 </configuration>
                 <executions>
@@ -367,6 +369,11 @@
 
         <dependency>
             <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-jdbi3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-views-freemarker</artifactId>
         </dependency>
 
@@ -378,6 +385,26 @@
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-metrics-graphite</artifactId>
+        </dependency>
+
+        <!-- JDBI3 -->
+
+        <dependency>
+            <groupId>ru.vyarus.guicey</groupId>
+            <artifactId>guicey-jdbi3</artifactId>
+            <version>${dropwizard-guicey.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jdbi</groupId>
+            <artifactId>jdbi3-kotlin</artifactId>
+            <version>${jdbi3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jdbi</groupId>
+            <artifactId>jdbi3-kotlin-sqlobject</artifactId>
+            <version>${jdbi3.version}</version>
         </dependency>
 
         <!-- Frameworks -->

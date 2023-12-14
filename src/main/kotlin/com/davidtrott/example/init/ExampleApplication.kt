@@ -5,7 +5,9 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.dropwizard.core.Application
 import io.dropwizard.core.setup.Bootstrap
 import io.dropwizard.core.setup.Environment
+import org.jdbi.v3.core.kotlin.KotlinPlugin
 import ru.vyarus.dropwizard.guice.GuiceBundle
+import ru.vyarus.guicey.jdbi3.JdbiBundle
 
 class ExampleApplication : Application<ExampleConfiguration>() {
 
@@ -24,6 +26,10 @@ class ExampleApplication : Application<ExampleConfiguration>() {
         with(bootstrap) {
             addBundle(
                 GuiceBundle.builder()
+                    .bundles(JdbiBundle
+                        .forDatabase<ExampleConfiguration> { config, _ -> config.database }
+                        .withConfig { jdbi -> jdbi.installPlugin(KotlinPlugin()) }
+                    )
                     .enableAutoConfig("com.davidtrott.example")
                     .searchCommands()
                     .build()
